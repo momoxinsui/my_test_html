@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html><title>NetWork Log</title>
+<head>
+    <style>
+        .title-text {
+            text-align: center;
+            color: #2F2F2F;
+            margin-top: 55px;
+            padding-left: 4px;
+            padding-right: 4px;
+            box-sizing: border-box;
+            width: 98vw;
+            height: auto;
+            word-wrap: break-word;
+        }
+        .longButton{
+            margin-top: 30px;
+            padding: 12px;
+            background-color: transparent;
+            box-sizing: border-box;
+            width: 100vw;
+            height: auto;
+            word-wrap: break-word;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .filter-div{
+            padding-left:4px;
+            padding-right:4px;
+            padding-top:4px;
+            padding-bottom:4px;
+            margin-left:12px;
+            margin-right:12px;
+            margin-top:40px;
+            border: 2px solid #F6F6F6;
+        }
+        .pressed {
+            background-color: #E5E5E5;
+        }
+        .press-filter {
+            border: 2px solid #E9A624;
+        }
+    </style>
+</head>
+<body style="margin: 0px;padding:0px;">
+<script type="text/javascript" src="local/networkLog.js"></script>
+<script type="text/javascript">
+    window.onload = function(){
+        window.webview.loadData();
+        document.getElementById("filter-id").textContent = "All";
+        window.webview.refreshFilterTitle()
+        let color = Android.getTextColorByMode()
+        let spans = document.getElementsByTagName("span")
+        let ps = document.getElementsByTagName("p")
+        let divs = document.getElementsByTagName("div")
+        for (let i = 0; i < spans.length; i++)
+            spans[i].style.color = color
+        for (let i = 0; i < ps.length; i++)
+            ps[i].style.color = color
+        for (let i = 0; i < divs.length; i++)
+            divs[i].style.color = color
+
+        let pressColor = Android.getPressColorByMode()
+        let styleSheets = document.styleSheets
+        for (let i = 0; i < styleSheets.length; i++){
+            let rules = styleSheets[i].cssRules || styleSheets[i].rules;
+            for (let j = 0; j < rules.length; j++){
+                if(rules[j].selectorText === '.pressed'){
+                    rules[j].style.backgroundColor = "#E5E5E5";
+                }
+            }
+        }
+    }
+    function filterClick(){
+        window.webview.filterClick();
+    }
+</script>
+<div class="title-text">
+    <p style="margin-bottom:5px;line-height:20px;">All interception rules are stored in</p>
+    <p style="margin-top:5px;margin-bottom:5px;line-height:20px;">
+        /storage/emulated/0/Android/data/mark.via.gp/files/filters/custom.txt</p>
+    <p style="margin-top:5px;margin-bottom:5px;line-height:20px;">You can manually edit it to modify
+        the rules, or long press any of the following items to choose whether to intercept.</p>
+</div>
+<div id="filter-id" class="filter-div" onclick="filterClick()"></div>
+<div id="network-list"></div>
+</body>
+</html>
