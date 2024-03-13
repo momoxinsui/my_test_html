@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <title>HappyAce Casino|Mostly trusted games in India</title>
+
+    <meta name="viewport"
+          content="width=device-width,user-scalable=no,initial-scale=1, minimum-scale=1,maximum-scale=1"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+
+    <!-- force webkit on 360 -->
+    <meta name="renderer" content="webkit"/>
+    <meta name="force-rendering" content="webkit"/>
+    <!-- force edge on IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- force full screen on some browser -->
+    <meta name="full-screen" content="yes"/>
+    <meta name="x5-fullscreen" content="true"/>
+    <meta name="360-fullscreen" content="true"/>
+
+    <!-- force screen orientation on some browser -->
+    <meta name="screen-orientation" content="landscape"/>
+    <meta name="x5-orientation" content="landscape">
+
+    <!--fix fireball/issues/3568 -->
+    <!--<meta name="browsermode" content="application">-->
+    <meta name="x5-page-mode" content="app">
+    <!--<link rel="apple-touch-icon" href=".png" />-->
+    <!--<link rel="apple-touch-icon-precomposed" href=".png" />-->
+    <link rel="stylesheet" type="text/css" href="style-mobile.css"/>
+    <!-- 禁止请求favicon（会占用一次请求，而且由于没有设置，会导致这次请求超时，占用时间太长） -->
+    <link rel="icon" href="data:;base64,=">
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        function GetRequest() {
+            var url = location.search; //获取url中"?"符后的字串
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                var strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                }
+            }
+            return theRequest;
+        }
+        let requestParams = GetRequest();
+        requestParams = GetRequest();
+        let fbPixel_id = requestParams["fbPixel_id"];
+        if (fbPixel_id && (fbPixel_id.length >= 5)) {
+            fbq('init', fbPixel_id);
+            fbq('track', 'PageView');
+            console.log("fbPixelTrack ...id " + fbPixel_id);
+        } else {
+            console.log("fbPixelTrack ...not init");
+        }
+
+        let requestOfflineEnv = requestParams["offline"];
+        let requestChannel = requestParams["channel"];
+        if (requestOfflineEnv == 1) {
+            // do nothing
+            console.log("HAminiTrack uptrack.. null");
+        } else {// online need upload..
+            (function (channelParam) {
+                if ((!channelParam) || (channelParam == "undefined")) {
+                    return;
+                }
+                var proUrl = "https://happyacerummy.win/api/sys/chnup";
+                let actionStr = "in_index_enter";// 与服务器约定好了
+                let channelStr = channelParam;
+                var sendData = `action=${actionStr}&chn=${channelStr}`;
+                console.log("HAminiTrack uptrack.. sendData " + sendData);
+                serviceRequest = new XMLHttpRequest();
+                serviceRequest.open('POST', proUrl, true);
+                serviceRequest.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+                serviceRequest.send(sendData);//第三步：发送请求  将请求参数写在URL中
+                serviceRequest.onload = function () {
+                    var obj = JSON.parse(serviceRequest.response);
+                    console.log("HAminiTrack uptrack.. result " + JSON.stringify(obj));
+                };
+            })(requestChannel);
+        }
+
+        let allowDebuggerEnv = requestParams["allowDebugger"];
+        if (allowDebuggerEnv == 1) {
+            // do nothing
+        } else {
+            setInterval(function () {
+                let time1 = Date.now();
+                window.notAllowDebugger = function notAllow(){
+                    debugger;
+                };
+                notAllowDebugger();
+                let time2 = Date.now();
+                if (time2 - time1 >= 100) {
+                    window.location.href = "about:blank";
+                }
+            }, 1000)
+        }
+    </script>
+    <script>
+        function setProcess() {
+            var processbar = document.getElementById("processbar");
+
+            var tmpValue = 1;
+            var tmpThisValue = parseFloat(processbar.style.width);
+            if (tmpThisValue >= 20) {
+                tmpValue = 0.6;
+            } else if (tmpThisValue >= 40) {
+                tmpValue = 0.4;
+            } else if (tmpThisValue >= 60) {
+                tmpValue = 0.3;
+            } else if (tmpThisValue >= 80) {
+                tmpValue = 0.6;
+            } else if (tmpThisValue >= 90) {
+                tmpValue = 0.2;
+            }
+
+            processbar.style.width = tmpThisValue + tmpValue + "%";
+            if (parseFloat(processbar.style.width) >= 95) {
+                window.clearInterval(bartimer);
+            }
+        }
+
+        var bartimer = window.setInterval(function () {
+            setProcess();
+        }, 100);
+        window.onload = function () {
+            bartimer;
+        };
+
+        window.onload = function () {
+            var processbar = document.getElementById("processbar");
+            processbar.style.width = parseInt(processbar.style.width) + 1 + "%";
+        }
+    </script>
+</head>
+<body>
+<canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="0"></canvas>
+<div id="splash">
+    <div class="processcontainer">
+        <div id="processbar" style="width:0%;"></div>
+    </div>
+</div>
+
+<script src="src/settings.js" charset="utf-8"></script>
+
+<script src="main.js" charset="utf-8"></script>
+
+<button id="partnerSelfCustomOpenBrowers" type="button"  value="点击按钮，打开浏览器"
+        onclick="partnerSelfCustomOpenBrowers(this.value)"></button>
+
+<label id="myText" style="display:block;position:absolute;">这是要显示或隐藏的文本。</label>
+<script>
+
+</script>
+
+<script type="text/javascript">
+    
+
+    function partnerSelfCustomOpenBrowers(paramJSONStr) {
+        var x = document.getElementById("myText");
+
+        if (window.webview) {
+            x.innerText = "https://www.baidu.com";
+                    window.webview.jumpSystemBrowser("https://www.baidu.com");
+                } else {
+                    x.innerText = "没有 window.webview";
+                }
+    }
+
+    (function () {
+            // open web debugger console
+            if (typeof VConsole !== 'undefined') {
+                window.vConsole = new VConsole();
+            }
+
+            var splash = document.getElementById('splash');
+            splash.style.display = 'block';
+
+            //重试弹窗
+            var showConfirmWindow = function () {
+                var r = confirm("Loading timed out!\n please try again!");
+                if (r == true) {
+                    loadEnginScrip();
+                }
+                else {
+                    //重新刷新页面
+                    window.location.reload();
+                }
+            }
+            //断线提示
+            var showOfflineWindow = function () {
+                var r = confirm("Network timed out, please check the network and try again!");
+                if (r == true) {
+                    //重新刷新页面
+                    window.location.reload();
+                }
+                else {
+                    //重新刷新页面
+                    window.location.reload();
+                }
+            }
+            var checkNetworkStatus = function (onLine) {
+                if (onLine === null) {
+                    onLine = navigator.onLine;
+                }
+                if (!onLine) {
+                    showOfflineWindow();
+                }
+                return onLine
+            }
+            var checkOfflineStatus = function () {
+                checkNetworkStatus(false);
+            }
+
+            //cocos2d-js添加加载失败逻辑
+            var loadEnginScrip = function () {
+                var cocos2d = document.createElement('script');
+
+                cocos2d.async = true;
+                cocos2d.src = window._CCSettings.debug ? 'cocos2d-js.js' : 'cocos2d-js-min.js';
+
+                var engineLoaded = function () {
+                    document.body.removeChild(cocos2d);
+                    cocos2d.removeEventListener('load', engineLoaded, false);
+                    cocos2d.removeEventListener('onerror', engineLoadFailed, false);
+                    window.removeEventListener('offline', checkOfflineStatus, false);
+                    cocos2d = null;
+                    window.boot();
+                };
+                var engineLoadFailed = function () {
+                    document.body.removeChild(cocos2d);
+                    cocos2d.removeEventListener('load', engineLoaded, false);
+                    cocos2d.removeEventListener('onerror', engineLoadFailed, false);
+                    window.removeEventListener('offline', checkOfflineStatus, false);
+                    cocos2d = null;
+                    showConfirmWindow();
+                }
+                cocos2d.addEventListener('load', engineLoaded, false);
+                cocos2d.addEventListener('onerror', engineLoadFailed, false);
+                try {
+                    if (checkNetworkStatus(null)) {
+                        document.body.appendChild(cocos2d);
+                        window.addEventListener('offline', checkOfflineStatus, false);
+                    } else {
+                        showOfflineWindow();
+                    }
+                } catch (error) {
+                    console.warn(error);
+                    engineLoadFailed();
+                }
+            }
+            //尝试加载
+            loadEnginScrip();
+        })();
+</script>
+</body>
+</html>
